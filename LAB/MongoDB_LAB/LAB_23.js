@@ -81,16 +81,55 @@ db.Company.insertMany([
 
 
 // 1. Find companies whose name starts with 'B' or 'F' 
+db.Company.find({CNAME:/^[BF]/i})
+db.Company.find({CNAME:{$regex:/^[BF]/i}})
+
+
 // 2. Find companies located in cities ending with 'pur' 
+db.Company.find({CITY:/pur/i})
+db.Company.find({CITY:{$regex:/pur$/i}})
+
 // 3. Find  companies  whose  name  contains  the  word  "Core" Find  companies  with  email addresses  starting  with 
 // "info" 
+db.Company.find({$or:[{CNAME:/Core/i},{EMAIL:/^info/i}]})
+
+db.Company.find({
+  $or: [
+    { CNAME: { $regex: /Core/i } },
+    { EMAIL: { $regex: /^info/i } }
+  ]
+})
+
+
 // 4. Find companies whose INDUSTRY starts with a capital letter followed by 4 lowercase letters 
+db.Company.find({ INDUSTRY: { $regex: /^[A-Z][a-z]{4}/ } })
+
+
 // 5. Find companies whose CNAME ends with a capital letter 
+db.Company.find({ CNAME: { $regex: /[A-Z]$/ } })
+
+
 // 6. Find companies whose CITY starts with any letter from A to K 
+db.Company.find({CITY:/^[a-k]/i})
+db.Company.find({CITY:{$regex:/^[a-k]/i}})
+
+
 // 7. Find companies whose INDUSTRY name has more than 8 letters 
+db.Company.find({INDUSTRY:/^[a-z]{9,}$/i})
+db.Company.find({ INDUSTRY: { $regex: /^.{9,}$/ } })
+
+
 // 8. Find companies whose EMAIL has a number in it 
+db.Company.find({ EMAIL: { $regex: /\d/ } })
+
 // 9. Find companies whose name starts and ends with vowels 
+db.Company.find({ CNAME: { $regex: /^[AEIOUaeiou].*[AEIOUaeiou]$/ } })
+
+
 // 10.  Find companies with CITY names that contain the same letter twice in a row
+db.Company.find({ CITY: { $regex: /(.)\1/ } })
+
+
 
 // Part – C 
 // 1. Find companies whose email starts with any two letters followed by digits 
